@@ -1,0 +1,73 @@
+{
+          "$schema": "https://raw.githubusercontent.com/F5Networks/f5-appsvcs-extension/main/schema/latest/as3-schema.json",
+          "class": "AS3",
+          "action": "deploy",
+          "persist": true,
+          "declaration": {
+                  "class": "ADC",
+                  "schemaVersion": "3.0.0",
+                  "id": "f5labone",
+                  "label": "webser_partion",
+                  "remark": "First As config",
+                  "web_app":{
+                            "class": "Tenant",
+                            "A1":{
+                                      "class": "Application",
+                                      "service":{
+                                                "class": "Service_HTTP",
+                                                "virtualAddresses":[
+                                                          "172.20.4.10"
+                                                ],
+                                                "pool": "Web_pool",
+                                                "persistenceMethods": [{
+                                                          "use": "jsessionid"
+                                                }]
+        
+                                      },
+                                      "Web_pool":{
+                                                "class": "Pool",
+                                                "monitors": [
+                                                          "http"
+                                                         
+                                                ],
+                                                "members": [{
+                                                          "servicePort": 80,
+                                                          "serverAddresses": [
+                                                                    "172.20.2.38"
+                                                                   
+                                                ]
+                                                }
+                                      ]
+                                      
+        
+                                      },
+                                         "jsessionid": {
+                                      "class": "Persist",
+                                      "persistenceMethod": "cookie",
+                                      "persistenceMethods": [ "source-address" ],
+                                      "cookieMethod": "hash",
+                                      "cookieName": "JSESSIONID"
+                                     
+        
+                            }
+          
+                                      
+                                      
+                                      
+                                      
+                                                
+                                                          
+                                                
+        
+                                                
+        
+                                      
+        
+                            }
+                  }
+        
+                  }         
+                  
+          }
+        
+        
